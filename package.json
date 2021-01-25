@@ -1,0 +1,55 @@
+{
+  "name": "lbs_login_component",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:login": "cross-env NODE_ENV=development webpack-dev-server --config ./build/webpack.login.config.js",
+    "build:login": "cross-env NODE_ENV=production webpack-cli --config ./build/webpack.login.config.js",
+    "dev:header": "cross-env NODE_ENV=development webpack-dev-server --config ./build/webpack.header.config.js",
+    "build:header": "cross-env NODE_ENV=production webpack-cli --config ./build/webpack.header.config.js",
+    "dev:footer": "cross-env NODE_ENV=development webpack-dev-server --config ./build/webpack.footer.config.js",
+    "build:footer": "cross-env NODE_ENV=production webpack-cli --config ./build/webpack.footer.config.js",
+    "release": "cos-cli putobject -i WRKs2PK86HYaAzMvKigfD3Kp -k Rwz04YqY9aoVT/6A2mWyLG9DSTpZ77qYD/ -a 70100 -H njc.vod.tencent-cloud.com -b lbsweb -f ./dist -t /web/lbsComponents/v"
+  },
+  "author": "",
+  "license": "ISC",
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "modules": false
+        }
+      ],
+      "stage-2"
+    ]
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "cross-env": "^7.0.0",
+    "css-loader": "^3.0.0",
+    "es3ify-loader": "^0.2.0",
+    "eslint": "^7.0.0",
+    "eslint-plugin-html": "^6.0.2",
+    "eslint-plugin-import": "^2.20.2",
+    "file-loader": "^4.0.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.13.1",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^0.23.1",
+    "url-loader": "^2.0.0",
+    "webpack": "^4.35.0",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.10.3",
+    "webpack-serve": "^3.1.0"
+  }
+}
