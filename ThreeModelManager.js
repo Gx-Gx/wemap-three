@@ -1,8 +1,4 @@
-/**
- * Developer: totoroxiao
- * Date: 2019-07-12
- * Three.js模型管理及渲染模块
- */
+
 import {
   Scene,
   WebGLRenderer,
@@ -14,12 +10,9 @@ import {
   PointLight,
   Raycaster,
   Vector2,
-} from '../libs/threejs/three.module';
-import { degree_to_radian } from '@util/util';
-import check from '@util/check';
-const { isNumber } = check;
+} from './libs/three.module.js';
 
-export default class ThreeModelManager extends TMap.LayerPlugin {
+export default class ThreeModelManager extends TMap.ModelPlugin {
   constructor(opts = {}) {
     super(opts);
 
@@ -33,7 +26,7 @@ export default class ThreeModelManager extends TMap.LayerPlugin {
 
   addModel(model) {
     const { modelMap } = this;
-    const { id } = model;
+    const id = model.id;
 
     if (modelMap.has(id)) {
       console.warn(`Model: 已存在id为${id}的Model对象。`);
@@ -68,7 +61,7 @@ export default class ThreeModelManager extends TMap.LayerPlugin {
   }
 
   removeModel(model) {
-    const { id } = model;
+    const id = model.id;
     if (this.modelMap.has(id)) {
       model.removeAllListeners('mask_changed');
       this.maskLayer.remove([id]);
@@ -136,18 +129,12 @@ export default class ThreeModelManager extends TMap.LayerPlugin {
   _onDraw() {
     const { scene, camera, renderer, map, group } = this;
 
-
     // 同步地图状态：旋转、缩放
     scene.rotation.x = degree_to_radian(-map.getPitch());
     scene.rotation.z = degree_to_radian(-map.getRotation());
     const scale = map.getScale() * Math.pow(2, map.getZoom() - 20);
     scene.scale.set(scale, scale, scale);
-    this.modelMap.forEach(model => {
-      if (model.zoomable === false) {
-        const modelScale = formatModelScale(model.scale, Math.pow(2, map.getZoom() - 20));
-        model.setModelScale(modelScale);
-      }
-    });
+
     // 整体平移至center为原点
     const centerWorldCoord = map.projectToWorldPlane(map.getCenter(), 20);
     group.position.set(-centerWorldCoord.x, centerWorldCoord.y, 0);
@@ -160,8 +147,8 @@ export default class ThreeModelManager extends TMap.LayerPlugin {
   }
 
   /**
-	 * 地图容器大小变化时需同步到Camera的投影矩阵上
-	 */
+   * 地图容器大小变化时需同步到Camera的投影矩阵上
+   */
   _onMapResize() {
     const { camera } = this;
     if (camera) {
@@ -191,9 +178,9 @@ export default class ThreeModelManager extends TMap.LayerPlugin {
    * 点击地图时触发模型拾取
    */
   _onMapClick(evt) {
-    const { camera, raycaster, group, modelMap } = this;
-    const { x, y } = evt.point;
-    const { width, height } = this.mapCamera.resolution;
+    const {camera, raycaster, group, modelMap} = this;
+    const {x, y} = evt.point;
+    const {width, height} = this.mapCamera.resolution;
 
     const mouse = new Vector2((x / width * 2) - 1, 1 - (y / height * 2));
 
@@ -215,7 +202,7 @@ export default class ThreeModelManager extends TMap.LayerPlugin {
    */
   _setViewOffset() {
     if (this.mapCamera && this.camera) {
-      const { offset, resolution } = this.mapCamera;
+      const {offset, resolution} = this.mapCamera;
       // offset取负值，因为THREE.Matrix4.makePerspective中的偏移量计算有误
       this.camera.setViewOffset(
         resolution.width,
@@ -228,7 +215,6 @@ export default class ThreeModelManager extends TMap.LayerPlugin {
     }
   }
 }
-
 /**
  * 光照同步
  */
@@ -340,10 +326,6 @@ function after(fn, afterFn) {
   };
 }
 
-function formatModelScale(scale, n) {
-  if (isNumber(scale)) {
-    return [scale / n, scale / n, scale / n];
-  } else {
-    return [scale[0] / n, scale[1] / n, scale[2] / n];
-  }
-}
+function degree_to_radian (deg) {
+  return deg * (Math.PI / 180);
+};

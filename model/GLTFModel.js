@@ -1,11 +1,6 @@
-/**
- * Developer: totoroxiao
- * Date: 2019-07-12
- * GLTF模型类
- */
 
-import GLTFLoader from '../libs/threejs/GLTFLoader';
-import ThreeModel from './ThreeModel';
+import GLTFLoader from '../libs/GLTFLoader.js';
+import ThreeModel from './ThreeModel.js';
 
 export default class GLTFModel extends ThreeModel {
   constructor(opts = {}) {

@@ -1,16 +1,9 @@
-/**
- * Developer: totoroxiao
- * Date: 2019-07-12
- * 基于Three.js实现的3D模型类
- */
 
-import Model from './Model';
-import { degree_to_radian, forIn } from '@util/util';
-import ThreeModelManager from '../managers/ThreeModelManager';
-import { Vector3 } from '../libs/threejs/three.module';
-import check from '@util/check';
-import { ClassTypeError } from '../../../util/error';
-import { moveAlongMixin } from '../common/moveAlongMixin';
+import Model from './Model.js';
+import ThreeModelManager from '../ThreeModelManager.js';
+import { Vector3 } from '../libs/three.module.js';
+import check from '../libs/check.js';
+import { ClassTypeError } from '../libs/error.js';
 
 const { isUndefined, isArray, isNumber } = check;
 
@@ -31,8 +24,6 @@ export default class ThreeModel extends Model {
     super(opts);
     // console.log(this);
     Object.assign(this, TMap.AnimatableMixin);
-
-    Object.assign(this, moveAlongMixin);
 
     this.load().then(() => {
       this.setRotation();
@@ -179,34 +170,6 @@ export default class ThreeModel extends Model {
     return this;
   }
 
-  /**
-   * 设置模型缩放比例,但不会改变模型scale属性，用于zoomable为false的模型
-   * @param {Number | Number[]} scale
-   */
-  setModelScale(scale) {
-    let modelScale = [1, 1, 1];
-    if (isUndefined(scale)) {
-      scale = this.scale;
-    }
-    if (isNumber(scale)) {
-      modelScale = [scale, scale, scale];
-    } else {
-      if (isVector3(scale)) {
-        modelScale = scale;
-      } else {
-        new ClassTypeError('Model.scale', 'Number 或 [Number, Number, Number]', scale).warn();
-        return this;
-      }
-    }
-
-    if (this.object) {
-      this.object.scale.set(...modelScale);
-      this.object.updateMatrix();
-    }
-
-    return this;
-  }
-
   getScale() {
     return this.scale;
   }
@@ -287,68 +250,16 @@ export default class ThreeModel extends Model {
       paths: this.mask || [],
     };
   }
-  /**
-   * 设置模型动画
-   */
-  startAnimation(keyFrames, animateOptions) {
-    this.stopAnimation();
-    this.map.keepHighFps(true);
-    const currFrame = {
-      position: this.position,
-      scale: this.scale,
-      rotation: this.rotation,
-    };
-    this._animate(keyFrames, {
-      onFrame({percentage, frame}) {
-        forIn(frame, (key, value) => {
-          switch (key) {
-            case 'position':
-              this.setPosition(value);
-              break;
-            case 'rotation':
-              this.setRotation(value);
-              break;
-            case 'scale':
-              this.setScale(value);
-              break;
-            case 'anchor':
-              this.setAnchor(value);
-              break;
-            default:
-              break;
-          }
-        });
-        this.emit('animation_playing', {percentage, frame});
-      },
-      onEnd() {
-        this.emit('animation_ended');
-        this.map.keepHighFps(false);
-      },
-      onLoop(loop) {
-        this.emit('animation_looped', loop);
-        this.map.keepHighFps(true);
-      },
-      onStop() {
-        this.emit('animation_stopped');
-        this.map.keepHighFps(false);
-      },
-      onPause() {
-        this.emit('animation_pause');
-        this.map.keepHighFps(false);
-      }
-    }, animateOptions, currFrame);
-    return this;
-  }
-  stopAnimation() {
-    this._stopAnimate();
-    return this;
-  }
-  pauseAnimation() {
-    this._pauseAnimate();
-    return this;
-  }
-  resumeAnimation() {
-    this._resumeAnimate();
-    return this;
+}
+
+function forIn(obj, callback) {
+  if (obj) {
+    Object.entries(obj).forEach(entry => {
+      callback(...entry);
+    });
   }
 }
+
+function degree_to_radian (deg) {
+  return deg * (Math.PI / 180);
+};
