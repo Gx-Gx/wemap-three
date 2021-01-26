@@ -5,13 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:login": "cross-env NODE_ENV=development webpack-dev-server --config ./build/webpack.login.config.js",
-    "build:login": "cross-env NODE_ENV=production webpack-cli --config ./build/webpack.login.config.js",
-    "dev:header": "cross-env NODE_ENV=development webpack-dev-server --config ./build/webpack.header.config.js",
-    "build:header": "cross-env NODE_ENV=production webpack-cli --config ./build/webpack.header.config.js",
-    "dev:footer": "cross-env NODE_ENV=development webpack-dev-server --config ./build/webpack.footer.config.js",
-    "build:footer": "cross-env NODE_ENV=production webpack-cli --config ./build/webpack.footer.config.js",
-    "release": "cos-cli putobject -i WRKs2PK86HYaAzMvKigfD3Kp -k Rwz04YqY9aoVT/6A2mWyLG9DSTpZ77qYD/ -a 70100 -H njc.vod.tencent-cloud.com -b lbsweb -f ./dist -t /web/lbsComponents/v"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./build/webpack.config.js",
+    "build": "cross-env NODE_ENV=production webpack-cli --config ./build/webpack.config.js"
   },
   "author": "",
   "license": "ISC",

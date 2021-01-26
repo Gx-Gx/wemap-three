@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>map</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #mapContainer {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+    <script src='../js/debug_api.js'></script>
+    <script src="../../dist/model.js"></script>
+</head>
+
+<body>
+<div id='mapContainer'></div>
+<script>
+var myMap, model;
+window.onload = function () {
+  myMap = new TMap.Map('mapContainer', {
+    zoom: 18,
+    center: new TMap.LatLng(39.98288912162261, 116.31162973812388),
+    pitch: 70,
+    // rotation: -45,
+    baseMap: [{
+      type: 'vector',
+      features: ['base']
+    }, {
+      type: 'traffic'
+    }],
+    subkey: '7PFBZ-AZO3X-Q5J45-ZYOCM-7CLGZ-IBFPG',
+    mapStyleId: 'style4',
+  });
+
+  model = new TMap.model.MeshModel({
+    map: myMap,
+    // url: './low_poly_building/scene.gltf',
+    scale: 1,
+    rotation: [0, 45, 0],
+    position: new TMap.LatLng(39.98285384542575, 116.31309359855004),
+  });
+  model.on("click", (e)=>{
+    console.log(e);
+  })
+  // const polygon = new TMap.MultiPolygon({
+  //   map: myMap,
+  //   geometries: [
+  //     {
+  //       id: 'building_0',
+  //       paths: modelOutline
+  //     }
+  //   ],
+  //   zIndex: 10,
+  // });
+
+}
+</script>
+</body>
