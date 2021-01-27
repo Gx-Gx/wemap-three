@@ -12,7 +12,9 @@ import {
   Vector2,
 } from './libs/three.module.js';
 
-export default class ThreeModelManager extends TMap.ModelPlugin {
+TMap.LayerPlugin = TMap.LayerPlugin || TMap.ModelPlugin;
+
+export default class ThreeModelManager extends TMap.LayerPlugin {
   constructor(opts = {}) {
     super(opts);
 
