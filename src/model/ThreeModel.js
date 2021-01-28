@@ -22,8 +22,6 @@ function isLatLngArray(value) {
 export default class ThreeModel extends Model {
   constructor(opts) {
     super(opts);
-    // console.log(this);
-    Object.assign(this, TMap.AnimatableMixin);
 
     this.load().then(() => {
       this.setRotation();
@@ -249,14 +247,6 @@ export default class ThreeModel extends Model {
       id: this.id,
       paths: this.mask || [],
     };
-  }
-}
-
-function forIn(obj, callback) {
-  if (obj) {
-    Object.entries(obj).forEach(entry => {
-      callback(...entry);
-    });
   }
 }
 

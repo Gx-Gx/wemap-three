@@ -29,8 +29,6 @@ checkUtils.isValidLatLng = function () {
     // [lat, lng] 或 {lat, lng} 或 TMap.LatLng
     const latLng = arguments[0];
     if (checkUtils.isArray(latLng)) {
-      // lat = latLng[0];
-      // lng = latLng[1];
       [lat, lng] = latLng;
     } else {
       lat = latLng.lat;

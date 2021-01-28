@@ -157,7 +157,6 @@ export default class ThreeModelManager extends TMap.LayerPlugin {
       const { fovy, view, near, far, distance } = this.mapCamera;
       const aspect = (view.right - view.left) / (view.top - view.bottom);
 
-      // map触发resize事件后this._updateCameraSize为true
       Object.assign(camera, {
         fov: fovy,
         aspect,
@@ -190,7 +189,6 @@ export default class ThreeModelManager extends TMap.LayerPlugin {
     const intersects = raycaster.intersectObjects(group.children, true);
     if (intersects.length) {
       const nearest = intersects[0];
-      // nearest.object.material.color.set(0xff0000);
       const model = modelMap.get(nearest.object._modelId);
       model.emit('click', {
         type: 'click',
@@ -258,7 +256,7 @@ function addLight(scene, mapLight, map) {
   const color = new Color(...mapLight.color.map(v => v / mapLight.intensity));
   const { intensity } = mapLight;
 
-  // TODO: 同步点光源
+  // GL光源类型支持环境光、平行光、点光源
   switch (mapLight.type) {
     case TMap.constants.LIGHT_TYPE.POINT: {
       const { position, height } = mapLight;
