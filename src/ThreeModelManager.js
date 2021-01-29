@@ -12,8 +12,6 @@ import {
   Vector2,
 } from './libs/three.module.js';
 
-TMap.LayerPlugin = TMap.LayerPlugin || TMap.ModelPlugin;
-
 export default class ThreeModelManager extends TMap.LayerPlugin {
   constructor(opts = {}) {
     super(opts);
@@ -72,7 +70,7 @@ export default class ThreeModelManager extends TMap.LayerPlugin {
     }
   }
 
-  _onAddToMap({ canvas, camera }) {
+  onAddToMap({ canvas, camera }) {
     // 创建渲染器
     this.renderer = new WebGLRenderer({
       canvas: canvas,
@@ -115,7 +113,7 @@ export default class ThreeModelManager extends TMap.LayerPlugin {
     this.map.on('offset_changed', this._onMapOffsetChanged);
   }
 
-  _onRemoveFromMap() {
+  onRemoveFromMap() {
     this.renderer = null;
     this.mapCamera = null;
     this.camera = null;
@@ -128,7 +126,7 @@ export default class ThreeModelManager extends TMap.LayerPlugin {
     this.map.off('offset_changed', this._onMapOffsetChanged);
   }
 
-  _onDraw() {
+  onDraw() {
     const { scene, camera, renderer, map, group } = this;
 
     // 同步地图状态：旋转、缩放

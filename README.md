@@ -6,7 +6,7 @@
 
 ### 项目结构
 
-- example: 使用示例
+- demo: 使用示例
 - src: 项目代码
   - libs: three相关源码和项目依赖的一些方法
   - model: 基于three封装的GLTF模型加载类
@@ -20,7 +20,7 @@
 
 #### LayerPlugin
 
-自定义插件图层抽象类，用户可以此作为基类实现自定义/第三方的图层插入，基于此图层可以接入外部引擎（如three.js、cesium.js）渲染能力。
+自定义图层插件抽象类，用户可以此作为基类实现自定义/第三方的图层插入，基于此图层可以接入外部引擎（如three.js、cesium.js）渲染能力。
 
 **构造函数**
 
@@ -51,9 +51,9 @@ new TMap.LayerPlugin(options:LayerPluginOptions);
 
 | 方法名                                    | 返回值 | 说明                                                         |
 | ----------------------------------------- | ------ | ------------------------------------------------------------ |
-| _onAddToMap(innerObjects:MapInnerObjects) | None   | 实现这个接口来定义图层添加过程，此方法在图层被添加到地图实例时被调用，该方法通过MapInnerObjects参数来获取地图内部对象。 |
-| _onRemoveFromMap()                        | None   | 实现这个接口来定义图层销毁阶段的过程，此方法在图层从地图实例中被移除时调用 |
-| _onDraw()                                 | None   | 实现这个接口来定义绘制函数，此方法在图层被绘制时调用         |
+| onAddToMap(innerObjects:MapInnerObjects) | None   | 实现这个接口来定义图层添加过程，此方法在图层被添加到地图实例时被调用，该方法通过MapInnerObjects参数来获取地图内部对象。 |
+| onRemoveFromMap()                        | None   | 实现这个接口来定义图层销毁阶段的过程，此方法在图层从地图实例中被移除时调用 |
+| onDraw()                                 | None   | 实现这个接口来定义绘制函数，此方法在图层被绘制时调用         |
 
 #### LayerPluginOptions 对象规范
 
