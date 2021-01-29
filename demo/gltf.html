@@ -16,8 +16,10 @@
       height: 100vh;
     }
   </style>
-  <script charset="utf-8"
-    src="https://wemapvis.map.qq.com/api/gljs?v=1.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77"></script>
+  <!-- <script charset="utf-8"
+    src="https://wemapvis.map.qq.com/api/gljs?v=1.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77"></script> -->
+  <script src="http://localhost:8081/dist/jsapi.js"></script>
+  <script src="http://apis.map.qq.com/api/seiya"></script>
 </head>
 
 <body>
@@ -34,7 +36,6 @@
         features: ['base', 'building3d']
       }],
     });
-
   </script>
   <script type="module">
     import GLTFModel from "../src/model/GLTFModel.js";
@@ -45,7 +46,19 @@
       new TMap.LatLng(39.982550566785186, 116.31250303019806),
     ];
 
-    var model = new GLTFModel({
+    // 显示遮罩面
+    const polygon = new TMap.MultiPolygon({
+      map: myMap,
+      geometries: [
+        {
+          id: 'building_0',
+          paths: modelOutline
+        }
+      ],
+    });
+
+    // 添加GLTF模型
+    const model = new GLTFModel({
       map: myMap,
       url: './low_poly_building/scene.gltf',
       scale: 100,
@@ -53,17 +66,5 @@
       position: new TMap.LatLng(39.98285384542575, 116.31309359855004),
       mask: modelOutline,
     });
-
-	// const polygon = new TMap.MultiPolygon({
-	// 	map: myMap,
-	// 	geometries: [
-	// 		{
-	// 			id: 'building_0',
-	// 			paths: modelOutline
-	// 		}
-	// 	],
-	// 	zIndex: 10,
-	// });
-
   </script>
 </body>

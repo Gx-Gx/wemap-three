@@ -39,11 +39,13 @@ new TMap.LayerPlugin(options:LayerPluginOptions);
 
 **方法**
 
-| 方法名          | 返回值 | 说明                 |
-| --------------- | ------ | -------------------- |
-| addTo(map: Map) | this   | 将图层添加到指定地图 |
-| remove()        | this   | 将该图层从地图上移除 |
-| redraw()        | this   | 重新渲染             |
+| 方法名                                   | 返回值 | 说明                                            |
+| ---------------------------------------- | ------ | ----------------------------------------------- |
+| addTo(map: Map)                          | this   | 将图层添加到指定地图                            |
+| remove()                                 | this   | 将该图层从地图上移除                            |
+| redraw()                                 | this   | 重新渲染                                        |
+| on(eventName:String, listener:Function)  | this   | 添加listener到eventName事件的监听器数组中       |
+| off(eventName:String, listener:Function) | this   | 从eventName事件的监听器数组中移除指定的listener |
 
 **抽象函数**
 
@@ -57,13 +59,16 @@ new TMap.LayerPlugin(options:LayerPluginOptions);
 
 自定义图层初始化参数说明。
 
-| 名称 | 类型 | 说明     |
-| ---- | ---- | -------- |
-| map  | Map  | 地图实例 |
+| 名称   | 类型   | 说明                                                         |
+| ------ | ------ | ------------------------------------------------------------ |
+| map    | Map    | 地图实例                                                     |
+| zIndex | Number | 图层渲染顺序，由小到大依次渲染，LayerPlugin可与同类、矢量图形类、可视化图层类调整相互压盖关系，默认为0 |
 
 #### MapInnerObjects 对象规范
 
-地图内部对象说明，具有以下只读属性：
+地图内部对象说明。
+
+**属性**
 
 | 名称   | 类型              | 说明                              |
 | ------ | ----------------- | --------------------------------- |
@@ -74,7 +79,9 @@ new TMap.LayerPlugin(options:LayerPluginOptions);
 
 地图引擎内部的渲染上下文，默认为`WebGL2RenderingContext`，在不支持WebGL2的浏览器中为`WebGLRenderingContext`。
 
-另外，还附加了一些属性如下：
+另外，还附加了一些属性如下。
+
+**属性**
 
 | 名称     | 类型    | 说明           |
 | -------- | ------- | -------------- |
